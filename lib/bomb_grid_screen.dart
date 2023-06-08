@@ -18,51 +18,53 @@ class BombGridScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextButton(
-                  onPressed: () {context
-                        .read<BombGridBloc>()
-                        .add(BombGridInitialEvent());},
+                  onPressed: () {
+                    context.read<BombGridBloc>().add(BombGridInitialEvent());
+                  },
                   child: const Text("Новая игра"),
                 ),
                 TextButton(
-                  onPressed: () {context
+                  onPressed: () {
+                    context
                         .read<BombGridBloc>()
-                        .add(BombGridSpinCellEvent(const [1,1]));},
+                        .add(BombGridSpinCellEvent(const [1, 1]));
+                  },
                   child: const Text("перевернуть ячейку"),
                 ),
               ],
             );
           }
           if (state is BombGridInGameState) {
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TextButton(
-                  onPressed: () {context
-                        .read<BombGridBloc>()
-                        .add(BombGridSpinCellEvent(const [1,1]));},
-                  child: const Text("перевернуть ячейку"),
-                ),
-              ],
-            );
-          } 
+            return GridView.count(crossAxisCount: 5, children: <Widget>[
+              for (var i = 0; i < state.grid.length; i++)
+                for (var j = 0; j < state.grid[0].length; j++)
+                  TextButton(
+                    onPressed: () {
+                      context
+                          .read<BombGridBloc>()
+                          .add(BombGridSpinCellEvent([i, j]));
+                    },
+                    child: Text(state.grid[i][j].index.toString()),
+                  ),
+            ]);
+          }
           if (state is BombGridInvertedCellState) {
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("количество мин "+ state.value.toString()),
-                TextButton(
-                  onPressed: () {context
-                        .read<BombGridBloc>()
-                        .add(BombGridSpinCellEvent([Random().nextInt(10),Random().nextInt(10)]));},
-                  child: const Text("перевернуть ячейку"),
-                ),
-              ],
-            );
-          } 
+            return GridView.count(crossAxisCount: 5, children: <Widget>[
+              for (var i = 0; i < state.grid.length; i++)
+                for (var j = 0; j < state.grid[0].length; j++)
+                  TextButton(
+                    onPressed: () {
+                      context
+                          .read<BombGridBloc>()
+                          .add(BombGridSpinCellEvent([i, j]));
+                    },
+                    child: Text(state.grid[i][j].index.toString()),
+                  ),
+            ]);
+          }
           if (state is BombGridEndGameState) {
             return Text("KABOOM");
-          }
-          else {
+          } else {
             return Container();
           }
         },

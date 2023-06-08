@@ -19,38 +19,44 @@ class BombGridBloc extends Bloc<BombGridEvent, BombGridState> {
     on<BombGridReplayEvent>(_replayIt);
   }
 
-  List<List<int>> mines=[];
-  _doInitial(BombGridInitialEvent event, Emitter emit) {
-    int gridW = 10;
-    int gridH = 10;
-    int numMines = 8;
+    List<List<Cell>> grid=[];
+    int gridW = 5;
+    int gridH = 5;
+    int numMines = 4;
 
+  _doInitial(BombGridInitialEvent event, Emitter emit) {
+    int index = 0;
     for(var i =0; i<gridH; i++){
-      List<int> row = [];
+      List<Cell> row = [];
       for(var j =0; j<gridW; j++){
-        row.add(0);
+        index ++;
+        row.add(Cell(index: index, isBomb: false, isOpen: false));
       }
-      mines.add(row);
+      grid.add(row);
     }
     //TODO добавить какую то проверку на количество мин, одинак знач
 
     //add mines
     for(var i=0; i<numMines; i++){
-      mines[Random().nextInt(gridH)][Random().nextInt(gridW)] = 1;
+      grid[Random().nextInt(gridH)][Random().nextInt(gridW)].isBomb = true;
     }
-    emit(BombGridInGameState(mines));
+    emit(BombGridInGameState(grid));
   }
   bool outBounds(int x,int y, int gridW, int gridH){
     return x<0||y<0||x>=gridW||y>=gridH;
   }
 
-  int calcNear(int x, int y) {
-    if(outBounds(x,y,10,10))return 0;
+  int calcNear(int x, int y, int gridW, int gridH) {
+    if(outBounds(x,y,gridW,gridH))return 0;
     int i=0;
     for (int offsetX=-1; offsetX<=1; offsetX++) {
       for (int offsetY=-1; offsetY<=1; offsetY++) {
-        if(outBounds(offsetX+x,offsetY+y,10,10))return 0;
-        i+=mines[offsetX+x][offsetY+y];
+        if(!outBounds(offsetX+x,offsetY+y,gridW,gridH)){
+          if(grid[offsetX+x][offsetY+y].isBomb){
+            i++;
+          }
+        }
+        
       }
     }
     return i;
@@ -59,11 +65,14 @@ class BombGridBloc extends Bloc<BombGridEvent, BombGridState> {
   _spinIt(BombGridSpinCellEvent event, Emitter emit) {
     List<int> cell = event.cell;
 
-    if(mines[cell[1]][cell[0]] == 1){
-      emit(BombGridEndGameState());
+    if(grid[cell[0]][cell[1]].isBomb == true){
+      // emit(BombGridEndGameState());
+      grid[cell[0]][cell[1]].index = -1;
     }else{
-      int value = calcNear(cell[1], cell[0]) ;
-      emit(BombGridInvertedCellState(value));
+      int value = calcNear(cell[0], cell[1], gridW, gridH) ;
+      grid[cell[0]][cell[1]].index = value;
+
+      emit(BombGridInGameState(grid));
     }
   }
 
