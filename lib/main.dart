@@ -1,9 +1,11 @@
+import 'package:bomb/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 import 'bloc/bomb_grid_bloc.dart';
 import 'bomb_grid_screen.dart';
+import 'main_menu_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,7 +22,7 @@ class MyApp extends StatelessWidget {
         Provider<BombGridBloc>.value(value: bombgrid),
       ],
       child: const MaterialApp(
-        home: BombGridScreen(),
+        home: SettingsScreen(),//BombGridScreen(),
       ),
     );
   }
