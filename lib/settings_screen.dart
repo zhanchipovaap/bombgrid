@@ -17,8 +17,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return Scaffold(
       appBar: AppBar(title: const Text("Настройки")),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
+          const SizedBox(
+              height: 30,
+            ),
           const Text("Выберите сложность игры"),
           ListTile(
           title: const Text('Новичок'),
@@ -56,6 +58,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             },
           ),
         ),
+        ElevatedButton(onPressed:(){}, child: const Text("Сохранить"))
         ]
       ),);
   }

@@ -8,10 +8,10 @@ part 'bomb_grid_event.dart';
 part 'bomb_grid_state.dart';
 
 class BombGridBloc extends Bloc<BombGridEvent, BombGridState> {
-  BombGridBloc() : super(BombGridInitialState()) {
-    on<BombGridEvent>((event, emit) {
-      // TODO: implement event handler
-    });
+  int gridW;
+  int gridH;
+  int numMines;
+  BombGridBloc(this.gridH, this.gridW, this.numMines) : super(BombGridInitialState()) {
     on<BombGridInitialEvent>(_doInitial);
     on<BombGridSpinCellEvent>(_spinIt);
     on<BombGridBombExplodeEvent>(_explodeIt);
@@ -20,9 +20,6 @@ class BombGridBloc extends Bloc<BombGridEvent, BombGridState> {
   }
 
     List<List<Cell>> grid=[];
-    int gridW = 5;
-    int gridH = 5;
-    int numMines = 4;
 
   _doInitial(BombGridInitialEvent event, Emitter emit) {
     int index = 0;
@@ -42,6 +39,7 @@ class BombGridBloc extends Bloc<BombGridEvent, BombGridState> {
     }
     emit(BombGridInGameState(grid));
   }
+  
   bool outBounds(int x,int y, int gridW, int gridH){
     return x<0||y<0||x>=gridW||y>=gridH;
   }

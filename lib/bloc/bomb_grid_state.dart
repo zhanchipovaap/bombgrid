@@ -3,8 +3,7 @@ part of 'bomb_grid_bloc.dart';
 @immutable
 abstract class BombGridState {}
 
-class BombGridInitialState extends BombGridState {
-}
+class BombGridInitialState extends BombGridState {}
 
 class BombGridInGameState extends BombGridState {
   List<List<Cell>> grid;
