@@ -22,11 +22,12 @@ class BombGridBloc extends Bloc<BombGridEvent, BombGridState> {
     List<List<Cell>> grid=[];
 
   _doInitial(BombGridInitialEvent event, Emitter emit) {
-    int index = 0;
+    grid=[];
+    int index = -2;
     for(var i =0; i<gridH; i++){
       List<Cell> row = [];
       for(var j =0; j<gridW; j++){
-        index ++;
+        //index ++;,
         row.add(Cell(index: index, isBomb: false, isOpen: false));
       }
       grid.add(row);
@@ -64,8 +65,8 @@ class BombGridBloc extends Bloc<BombGridEvent, BombGridState> {
     List<int> cell = event.cell;
 
     if(grid[cell[0]][cell[1]].isBomb == true){
-      // emit(BombGridEndGameState());
-      grid[cell[0]][cell[1]].index = -1;
+      emit(BombGridEndGameState());
+      // grid[cell[0]][cell[1]].index = -1;
     }else{
       int value = calcNear(cell[0], cell[1], gridW, gridH) ;
       grid[cell[0]][cell[1]].index = value;

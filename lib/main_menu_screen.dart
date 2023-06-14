@@ -25,18 +25,41 @@ class MainMenuScreen extends StatelessWidget {
           home: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-                      bombgrid.add(BombGridInitialEvent());
-                      return BlocProvider<BombGridBloc>.value(
-                          value: bombgrid, child: const BombGridScreen());
-                    }));
-                  },
-                  child: const Text("Начать игру")),
-              ElevatedButton(onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingsScreen()));
-              }, child: const Text("Настройки")),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                width: 140,
+                height: 38,
+                child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (_) {
+                        bombgrid.add(BombGridInitialEvent());
+                        return BlocProvider<BombGridBloc>.value(
+                            value: bombgrid, child: const BombGridScreen());
+                      }));
+                    },
+                    child: const Text("Начать игру")),
+              ),
+              const SizedBox(
+                        height: 10,
+                      ),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                width: 140,
+                height: 38,
+                child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const SettingsScreen()));
+                    },
+                    child: const Text("Настройки")),
+              ),
             ],
           ),
         ),
