@@ -10,8 +10,8 @@ class BombGridScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int gridW = 10;
-    int gridH = 10;
+    int gridW = 16;
+    int gridH = 16;
 
     return Scaffold(
       appBar: AppBar(
@@ -26,12 +26,13 @@ class BombGridScreen extends StatelessWidget {
             builder: (context, state) {
               if (state is BombGridInitialState) {
                 //TODO тут что-то надо придумать иначе кринж
-                return GridView.count(
+                return GridView.extent(
+                  maxCrossAxisExtent: 150,
                   primary: false,
                   padding: const EdgeInsets.all(10),
                   crossAxisSpacing: 2,
                   mainAxisSpacing: 2,
-                  crossAxisCount: gridW,
+                  // crossAxisCount: gridW,
                   shrinkWrap: true,
                   children: <Widget>[
                     for (var i = 0; i < gridH; i++)

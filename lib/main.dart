@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'end_game_screen.dart';
 import 'main_menu_screen.dart';
 
 void main() {
@@ -12,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-        home: MainMenuScreen(),
+        home: MainMenuScreen(),//EndGameScreen(),//
       );
   }
 }

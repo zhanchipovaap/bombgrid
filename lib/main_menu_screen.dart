@@ -11,7 +11,7 @@ class MainMenuScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    BombGridBloc bombgrid = BombGridBloc(10, 10, 8);
+    BombGridBloc bombgrid = BombGridBloc(16, 16, 8);
 
     return Scaffold(
       appBar: AppBar(
@@ -43,8 +43,8 @@ class MainMenuScreen extends StatelessWidget {
                     child: const Text("Начать игру")),
               ),
               const SizedBox(
-                        height: 10,
-                      ),
+                height: 10,
+              ),
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
